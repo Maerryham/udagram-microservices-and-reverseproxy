@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-feed-pod
@@ -7,7 +7,7 @@ spec:
     - name: udagram-api-feed
       image: maerryham/udagram-api-feed:v1
       command: ["sleep", "3600"]
-     env:
+      env:
        # Define the environment variable
         - name: POSTGRES_USERNAME
           valueFrom:
@@ -38,7 +38,7 @@ spec:
           valueFrom:
             secretKeyRef:
                name: my-aws-secret
-               key: aws_profile
+               key: aws_access_key_id
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:

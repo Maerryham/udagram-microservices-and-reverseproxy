@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-user-pod
@@ -7,7 +7,7 @@ spec:
     - name: udagram-api-user
       image: maerryham/udagram-api-user:v1
       command: ["sleep", "3600"]
-     env:
+      env:
        # Define the environment variable
         - name: POSTGRES_USERNAME
           valueFrom:
