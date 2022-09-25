@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  postgres_host: mariamproject.c2zkksbilt2m.us-east-1.rds.amazonaws.com
+  postgres_db: mariamproject
+  aws_bucket: mariam-project-31
+  aws_region: us-east-1
+  jwt_secret: testing
+  url: http://localhost:8100
