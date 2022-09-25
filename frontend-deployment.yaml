@@ -3,7 +3,16 @@ kind: Deployment
 metadata:
   name: frontend-pod
 spec:
-  containers:
-    - name: udagram-frontend
-      image: maerryham/udagram-frontend:v1
-      command: ["sleep", "3600"]
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-feed-pod
+  template:
+    metadata:
+      labels:
+        app: backend-feed-pod
+    spec:
+      containers:
+        - name: udagram-frontend
+          image: maerryham/udagram-frontend:v6
+          command: ["sleep", "3600"]

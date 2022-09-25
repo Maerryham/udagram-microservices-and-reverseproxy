@@ -3,8 +3,17 @@ kind: Deployment
 metadata:
   name: reverseproxy-pod
 spec:
-  containers:
-    - name: reverseproxy
-      image: maerryham/reverseproxy:v1
-      command: ["sleep", "3600"]
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-feed-pod
+  template:
+    metadata:
+      labels:
+        app: backend-feed-pod
+    spec:
+      containers:
+        - name: reverseproxy
+          image: maerryham/reverseproxy:v1
+          command: ["sleep", "3600"]
      
