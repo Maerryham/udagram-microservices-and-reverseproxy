@@ -6,11 +6,11 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: backend-feed-pod
+      app: reverseproxy-pod
   template:
     metadata:
       labels:
-        app: backend-feed-pod
+        app: reverseproxy-pod
     spec:
       containers:
         - name: reverseproxy

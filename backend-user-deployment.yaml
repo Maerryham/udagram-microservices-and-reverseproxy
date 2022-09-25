@@ -6,11 +6,11 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: backend-feed-pod
+      app: backend-user-pod
   template:
     metadata:
       labels:
-        app: backend-feed-pod
+        app: backend-user-pod
     spec:
       containers:
         - name: udagram-api-user
