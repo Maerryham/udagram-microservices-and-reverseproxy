@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: udagram-api-user
-          image: maerryham/udagram-api-user:v1
+          image: maerryham/udagram-api-user:v2
           ports:
           - containerPort: 8080
           command: ["sleep", "3600"]
