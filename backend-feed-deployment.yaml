@@ -4,7 +4,7 @@ metadata:
   name: backend-feed-pod
 
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend-feed-pod
@@ -16,6 +16,14 @@ spec:
       containers:
         - name: udagram-api-feed
           image: maerryham/udagram-api-feed:v1
+          ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelayseconds: 3
+          periodSeconds: 3
           command: ["sleep", "3600"]
           env:
             # Define the environment variable

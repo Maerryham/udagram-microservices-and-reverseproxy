@@ -53,47 +53,183 @@ router.get('/verification',
     });
 
 router.post('/login', async (req: Request, res: Response) => {
+  // -- Logging --
+  const logStartTime = new Date();
   const email = req.body.email;
   const password = req.body.password;
 
   if (!email || !EmailValidator.validate(email)) {
+    console.error(
+      'users/login',
+      JSON.stringify({
+        input: req.body,
+        output: {
+          statusCode: 400,
+          body: JSON.stringify({
+            auth: false,
+            message: 'Email is missing or malformed.'
+          }),
+        },
+        requestType: 'POST',
+        startTime: logStartTime.toISOString(),
+        durationInMs: new Date().getTime() - logStartTime.getTime(),
+      })
+    );
+
     return res.status(400).send({auth: false, message: 'Email is required or malformed.'});
   }
 
   if (!password) {
+    console.error(
+      'users/login',
+      JSON.stringify({
+        input: req.body,
+        output: {
+          statusCode: 400,
+          body: JSON.stringify({
+            auth: false,
+            message: 'Password is required.'
+          }),
+        },
+        requestType: 'POST',
+        startTime: logStartTime.toISOString(),
+        durationInMs: new Date().getTime() - logStartTime.getTime(),
+      })
+    );
     return res.status(400).send({auth: false, message: 'Password is required.'});
   }
 
   const user = await User.findByPk(email);
   if (!user) {
+    console.error(
+      'users/login',
+      JSON.stringify({
+        input: req.body,
+        output: {
+          statusCode: 401,
+          body: JSON.stringify({
+            auth: false,
+            message: 'User was not found..'
+          }),
+        },
+        requestType: 'POST',
+        startTime: logStartTime.toISOString(),
+        durationInMs: new Date().getTime() - logStartTime.getTime(),
+      })
+    );
     return res.status(401).send({auth: false, message: 'User was not found..'});
   }
 
   const authValid = await comparePasswords(password, user.passwordHash);
 
   if (!authValid) {
+    console.error(
+      'users/login',
+      JSON.stringify({
+        input: req.body,
+        output: {
+          statusCode: 401,
+          body: JSON.stringify({
+            auth: false,
+            message: 'Password was invalid.'
+          }),
+        },
+        requestType: 'POST',
+        startTime: logStartTime.toISOString(),
+        durationInMs: new Date().getTime() - logStartTime.getTime(),
+      })
+    );
     return res.status(401).send({auth: false, message: 'Password was invalid.'});
   }
 
   const jwt = generateJWT(user);
+  console.info(
+    'users/login',
+    JSON.stringify({
+      input: req.body,
+      output: {
+        statusCode: 200,
+        body: JSON.stringify({
+          auth: true, token: jwt, user: user.short()
+        }),
+      },
+      requestType: 'POST',
+      startTime: logStartTime.toISOString(),
+      durationInMs: new Date().getTime() - logStartTime.getTime(),
+    })
+  );
   res.status(200).send({auth: true, token: jwt, user: user.short()});
 });
 
 
 router.post('/', async (req: Request, res: Response) => {
+  // -- Logging --
+  const logStartTime = new Date();
+
   const email = req.body.email;
   const plainTextPassword = req.body.password;
 
   if (!email || !EmailValidator.validate(email)) {
+    console.error(
+      'users/',
+      JSON.stringify({
+        input: {
+          email
+        },
+        output: {
+          statusCode: 400,
+          body: JSON.stringify({
+            auth: false,
+            message: 'Email is missing or malformed.'
+          }),
+        },
+        requestType: 'POST',
+        startTime: logStartTime.toISOString(),
+        durationInMs: new Date().getTime() - logStartTime.getTime(),
+      })
+    );
+
     return res.status(400).send({auth: false, message: 'Email is missing or malformed.'});
   }
 
   if (!plainTextPassword) {
+    console.error(
+      'users/',
+      JSON.stringify({
+        input: req.body,
+        output: {
+          statusCode: 400,
+          body: JSON.stringify({
+            auth: false,
+            message: 'Password is required.'
+          }),
+        },
+        requestType: 'POST',
+        startTime: logStartTime.toISOString(),
+        durationInMs: new Date().getTime() - logStartTime.getTime(),
+      })
+    );
     return res.status(400).send({auth: false, message: 'Password is required.'});
   }
 
   const user = await User.findByPk(email);
   if (user) {
+    console.error(
+      'users/',
+      JSON.stringify({
+        input: req.body,
+        output: {
+          statusCode: 422,
+          body: JSON.stringify({
+            auth: false,
+            message: 'User already exists.'
+          }),
+        },
+        requestType: 'POST',
+        startTime: logStartTime.toISOString(),
+        durationInMs: new Date().getTime() - logStartTime.getTime(),
+      })
+    );
     return res.status(422).send({auth: false, message: 'User already exists.'});
   }
 
@@ -108,10 +244,40 @@ router.post('/', async (req: Request, res: Response) => {
 
 
   const jwt = generateJWT(savedUser);
+  console.info(
+    'users/',
+    JSON.stringify({
+      input: req.body,
+      output: {
+        statusCode: 201,
+        body: JSON.stringify({
+          token: jwt, user: savedUser.short()
+        }),
+      },
+      requestType: 'POST',
+      startTime: logStartTime.toISOString(),
+      durationInMs: new Date().getTime() - logStartTime.getTime(),
+    })
+  );
   res.status(201).send({token: jwt, user: savedUser.short()});
 });
 
 router.get('/', async (req: Request, res: Response) => {
+  // -- Logging --
+  const logStartTime = new Date();
+  console.info(
+    'users/auth/',
+    JSON.stringify({
+      input: req.body,
+      output: {
+        statusCode: 200,
+        body: 'auth',
+      },
+      requestType: 'GET',
+      startTime: logStartTime.toISOString(),
+      durationInMs: new Date().getTime() - logStartTime.getTime(),
+    })
+  );
   res.send('auth');
 });
 

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-pod
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend-pod
@@ -15,4 +15,6 @@ spec:
       containers:
         - name: udagram-frontend
           image: maerryham/udagram-frontend:v7
+          ports:
+          - containerPort: 80
           command: ["sleep", "3600"]

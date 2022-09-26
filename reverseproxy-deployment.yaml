@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: reverseproxy-pod
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: reverseproxy-pod
@@ -15,5 +15,7 @@ spec:
       containers:
         - name: reverseproxy
           image: maerryham/reverseproxy:v1
+          ports:
+          - containerPort: 8080
           command: ["sleep", "3600"]
      

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-user-pod
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend-user-pod
@@ -15,6 +15,8 @@ spec:
       containers:
         - name: udagram-api-user
           image: maerryham/udagram-api-user:v1
+          ports:
+          - containerPort: 8080
           command: ["sleep", "3600"]
           env:
           # Define the environment variable
