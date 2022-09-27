@@ -6,6 +6,9 @@ metadata:
   name: reverseproxy-pod
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      service: reverseproxy-pod
   template:
     metadata:
       labels:

@@ -6,6 +6,9 @@ metadata:
   name: backend-user-pod
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      service: backend-user-pod
   template:
     metadata:
       labels:
@@ -26,7 +29,7 @@ spec:
         - containerPort: 8080
         command: ["sleep", "3600"]
         env:
-        # Define the environment variable
+          # Define the environment variable
           - name: POSTGRES_USERNAME
             valueFrom:
               secretKeyRef:
