@@ -5,7 +5,7 @@ metadata:
     service: backend-feed-pod
   name: backend-feed-pod
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       service: backend-feed-pod
@@ -20,14 +20,14 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "64Mi"
+            memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "1024Mi"
+            memory: "1524Mi"
             cpu: "500m" 
         ports:
         - containerPort: 8080
-        command: ["sleep", "3600"]
+        # command: ["sleep", "3600"]
         env:
           # Define the environment variable
           - name: POSTGRES_USERNAME

@@ -20,14 +20,14 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "64Mi"
+            memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "1024Mi"
+            memory: "1524Mi"
             cpu: "500m" 
         ports:
         - containerPort: 8080
-        command: ["sleep", "3600"]
+        #command: ["sleep", "3600"]
         env:
           # Define the environment variable
           - name: POSTGRES_USERNAME

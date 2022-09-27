@@ -7,5 +7,4 @@ data:
   postgres_db: mariamproject
   aws_bucket: mariam-project-31
   aws_region: us-east-1
-  jwt_secret: testing
-  url: http://localhost:8100
+  url: http://a2d06e5090342474eb4ca476f13cd738-1012803761.us-east-1.elb.amazonaws.com

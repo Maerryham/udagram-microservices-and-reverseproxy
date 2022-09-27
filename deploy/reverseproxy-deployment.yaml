@@ -27,6 +27,6 @@ spec:
             cpu: "500m"   
         ports:
         - containerPort: 8080
-        command: ["sleep", "3600"]
+      #  command: ["sleep", "3600"]
       restartPolicy: Always
      
